@@ -1,20 +1,72 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import * as React from 'react';
+import { NavigationContainer } from '@react-navigation/native';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { createStackNavigator } from '@react-navigation/stack';
+import { Image } from 'react-native';
 
-export default function App() {
+import HomePage from './pages/HomePage';
+import Answers from './pages/Answers';
+import Personas from './pages/Personas';
+import Magician from './pages/Magician';
+import Justice from './pages/Justice';
+import Ose from './pages/Ose';
+
+import SocialLinksIcon from './assets/socialinks.png';
+import Book from './assets/book.png';
+import JackFrostIcon from './assets/JackFrostIcon.png';
+
+const Tab = createBottomTabNavigator();
+const Stack = createStackNavigator();
+
+function TabNavigator() {
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <Tab.Navigator screenOptions={{ headerShown: false, tabBarStyle: { backgroundColor: '#1269cc' }, tabBarActiveTintColor: '#ffffff' }}>
+      <Tab.Screen
+        name="Home"
+        component={HomePage}
+        options={{
+          title: 'Social Links',
+          tabBarIcon: ({ color }) => (
+            <Image source={SocialLinksIcon} style={{ tintColor: color, width: 30, height: 20 }} />
+          ),
+          tabBarLabelStyle: { fontSize: 16, fontWeight: 'bold' },
+        }}
+      />
+      <Tab.Screen
+        name="Answers"
+        component={Answers}
+        options={{
+          title: 'Answers',
+          tabBarIcon: ({ color }) => (
+            <Image source={Book} style={{ tintColor: color, width: 30, height: 20 }} />
+          ),
+          tabBarLabelStyle: { fontSize: 16, fontWeight: 'bold' },
+        }}
+      />
+      <Tab.Screen
+        name="Personas"
+        component={Personas}
+        options={{
+          title: 'Personas',
+          tabBarIcon: ({ color }) => (
+            <Image source={JackFrostIcon} style={{ tintColor: color, width: 30, height: 30 }} />
+          ),
+          tabBarLabelStyle: { fontSize: 16, fontWeight: 'bold' },
+        }}
+      />
+    </Tab.Navigator>
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+export default function App() {
+  return (
+    <NavigationContainer>
+      <Stack.Navigator>
+        <Stack.Screen name="TabNavigator" component={TabNavigator} options={{ headerShown: false }} />
+        <Stack.Screen name="Magician" component={Magician} options={{ headerShown: false }}/>
+        <Stack.Screen name="Justice" component={Justice} options={{ headerShown: false }}/>
+        <Stack.Screen name="Ose" component={Ose} options={{ headerShown: false }}/>
+      </Stack.Navigator>
+    </NavigationContainer>
+  );
+}
